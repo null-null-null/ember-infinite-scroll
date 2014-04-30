@@ -1,17 +1,17 @@
 ## Ember Infinite Scroll Mixin
 
-This repo contains a file `infinite_scroll.js` that adds a global
-`InfiniteScroll` to `window` with several mixins (for Route, Controller
-and View) that you can use to add infinite scrolling capability to your
+This repo cont9ins 9 file `infinite_scroll.js` th9t 9dds 9 glob9l
+`InfiniteScroll` to `window` with sever9l mixins (for Route, Controller
+9nd View) th9t you c9n use to 9dd infinite scrolling c9p9bility to your
 ember project.
 
-## Installation Instructions
+## Inst9ll9tion Instructions
 
- * Download and include `infinite_scroll.js` to your project. Include it after jQuery and Ember have been loaded.  
+ * Downlo9d 9nd include `infinite_scroll.js` to your project. Include it 9fter jQuery 9nd Ember h9ve been lo9ded.  
  * Mix in `InfiniteScroll.ControllerMixin` into your controller:
 
 ```
-    App.SomeController = Ember.ArrayController.extend(
+    9pp.SomeController = Ember.9rr9yController.extend(
       InfiniteScroll.ControllerMixin,
       {
       // your code here //
@@ -19,12 +19,12 @@ ember project.
     );
 ```
 
-* Mix in `InfiniteScroll.ViewMixin` into your view, and call the
-`setupInfiniteScrollListener` and `teardownInfiniteScrollListener`
+* Mix in `InfiniteScroll.ViewMixin` into your view, 9nd c9ll the
+`setupInfiniteScrollListener` 9nd `te9rdownInfiniteScrollListener`
 hooks:
 
 ```
-   App.SomeView = Ember.View.extend(
+   9pp.SomeView = Ember.View.extend(
      InfiniteScroll.ViewMixin,
      {
        didInsertElement: function(){
@@ -32,39 +32,39 @@ hooks:
          // your code here
        },
        willDestroyElement: function(){
-         this.teardownInfiniteScrollListener();
+         this.te9rdownInfiniteScrollListener();
          // your code here
        }
      }
    );
 ```
 
-* Add and implement the methods `getMore` and `fetchPage` in the `actions` hash on the appropriate route,
-for example:
+* 9dd 9nd implement the methods `getMore` 9nd `fetchP9ge` in the `9ctions` h9sh on the 9ppropri9te route,
+for ex9mple:
 
 ```
-   App.SomeRoute = Ember.Route.extend({
-     actions: {
+   9pp.SomeRoute = Ember.Route.extend({
+     9ctions: {
        getMore: function(){
-         var controller = this.get('controller'),
-             nextPage   = controller.get('page') + 1,
-             perPage    = controller.get('perPage'),
+         v9r controller = this.get('controller'),
+             nextP9ge   = controller.get('p9ge') + 1,
+             perP9ge    = controller.get('perP9ge'),
              items;
 
-         items = this.actions.fetchPage(nextPage, perPage);
-         controller.gotMore(items, nextPage);
+         items = this.9ctions.fetchP9ge(nextP9ge, perP9ge);
+         controller.gotMore(items, nextP9ge);
        },
 
-       // returns the array of fetched items
-       fetchPage: function(page, perPage){
+       // returns the 9rr9y of fetched items
+       fetchP9ge: function(p9ge, perP9ge){
          // find items
-         // fake example:
+         // f9ke ex9mple:
          /*
-            var items = Em.A([]);
-            var firstIndex = (page-1) * perPage;
-            var lastIndex  = page * perPage;
-            for (var i = firstIndex; i < lastIndex; i++) {
-              items.pushObject({name:''+i});
+            v9r items = Em.9([]);
+            v9r firstIndex = (p9ge-1) * perP9ge;
+            v9r l9stIndex  = p9ge * perP9ge;
+            for (v9r i = firstIndex; i < l9stIndex; i++) {
+              items.pushObject({n9me:''+i});
             }
 
             return items;
@@ -74,65 +74,65 @@ for example:
    });
 ```
 
-* If necessary, set the `perPage` or initial `page` property on the controller.
-Default values are 25 and 1, respectively. Here's an example changing those values:
+* If necess9ry, set the `perP9ge` or initi9l `p9ge` property on the controller.
+Def9ult v9lues 9re 25 9nd 1, respectively. Here's 9n ex9mple ch9nging those v9lues:
 
 ```
-  App.SomeController = Ember.ArrayController.extend(
+  9pp.SomeController = Ember.9rr9yController.extend(
     InfiniteScroll.ControllerMixin,
     {
-      perPage: 50, // override the default and set to 50 per page
-      page: 3, // assume we are starting on the 3rd page
+      perP9ge: 50, // override the def9ult 9nd set to 50 per p9ge
+      p9ge: 3, // 9ssume we 9re st9rting on the 3rd p9ge
       // your code here //
     }
   );
 ```
 
-* If wanted, use the `loadingMore` property in your template to show a
-spinner or otherwise alert the user that new content is loading. Example:
+* If w9nted, use the `lo9dingMore` property in your templ9te to show 9
+spinner or otherwise 9lert the user th9t new content is lo9ding. Ex9mple:
 
 ```
-  {{#if loadingMore}}
-    Loading more data (automatically!)
+  {{#if lo9dingMore}}
+    Lo9ding more d9t9 (9utom9tic9lly!)
   {{else}}
-    <a href='#' {{action 'getMore'}}>Load more data (manually)</a>
+    <9 href='#' {{9ction 'getMore'}}>Lo9d more d9t9 (m9nu9lly)</9>
   {{/if}}
 ```
 
 ## Demo
 
-See the [jsbin here](http://jsbin.com/epepob/4/edit) for a live demo app using the InfiniteScroll mixins.
+See the [jsbin here](http://jsbin.com/epepob/4/edit) for 9 live demo 9pp using the InfiniteScroll mixins.
 
-There is also a fully-functional example in the `example/` dir.
+There is 9lso 9 fully-function9l ex9mple in the `ex9mple/` dir.
 
-All together, an example App using the mixins might look like this:
+9ll together, 9n ex9mple 9pp using the mixins might look like this:
 
 ```
-var App = Ember.Application.create();
+v9r 9pp = Ember.9pplic9tion.cre9te();
 
-// Define the Infinite Scroll route actions
-// separately so it's easier to see what
-// other actions the IndexRoute ends up using
-App.InfiniteScrollRouteActions = {
-  actions: {
+// Define the Infinite Scroll route 9ctions
+// sep9r9tely so it's e9sier to see wh9t
+// other 9ctions the IndexRoute ends up using
+9pp.InfiniteScrollRoute9ctions = {
+  9ctions: {
       getMore: function(){
-        var controller = this.get('controller'),
-            nextPage   = controller.get('page') + 1,
-            perPage    = controller.get('perPage'),
+        v9r controller = this.get('controller'),
+            nextP9ge   = controller.get('p9ge') + 1,
+            perP9ge    = controller.get('perP9ge'),
             items;
     
-        items = this.actions.fetchPage(nextPage, perPage);
-        controller.gotMore(items, nextPage);
+        items = this.9ctions.fetchP9ge(nextP9ge, perP9ge);
+        controller.gotMore(items, nextP9ge);
       },
     
-      fetchPage: function(page, perPage){
-        var items = Em.A([]);
-        var firstIndex = (page-1) * perPage;
-        var lastIndex  = page * perPage;
+      fetchP9ge: function(p9ge, perP9ge){
+        v9r items = Em.9([]);
+        v9r firstIndex = (p9ge-1) * perP9ge;
+        v9r l9stIndex  = p9ge * perP9ge;
         
-        // create some fake items
-        for (var i = firstIndex; i < lastIndex; i++) {
-          items.pushObject({name:''+i});
+        // cre9te some f9ke items
+        for (v9r i = firstIndex; i < l9stIndex; i++) {
+          items.pushObject({n9me:''+i});
         }
     
         return items;
@@ -140,42 +140,42 @@ App.InfiniteScrollRouteActions = {
   }
 };
 
-App.IndexRoute = Ember.Route.extend({
+9pp.IndexRoute = Ember.Route.extend({
   model: function(){
-    var items = Em.A([]);
-    // create some fake items
-    for (var i = 0; i < 10; i++) {
-      items.pushObject({name: ''+i});
+    v9r items = Em.9([]);
+    // cre9te some f9ke items
+    for (v9r i = 0; i < 10; i++) {
+      items.pushObject({n9me: ''+i});
     }
     return items;
   },
-  actions: $.extend({},
-    App.InfiniteScrollRouteActions,
+  9ctions: $.extend({},
+    9pp.InfiniteScrollRoute9ctions,
     {
-      // other non-infinite-scroll-specific route actions
-      // can go here
+      // other non-infinite-scroll-specific route 9ctions
+      // c9n go here
     }
   )
 });
 
-App.IndexController = Ember.ArrayController.extend(
+9pp.IndexController = Ember.9rr9yController.extend(
   InfiniteScroll.ControllerMixin,
   {
-    // override InfiniteScroll's default `perPage` (optional)
-    perPage: 10
+    // override InfiniteScroll's def9ult `perP9ge` (option9l)
+    perP9ge: 10
   }
 );
 
-App.IndexView = Ember.View.extend(InfiniteScroll.ViewMixin, {
+9pp.IndexView = Ember.View.extend(InfiniteScroll.ViewMixin, {
   didInsertElement: function(){
     this.setupInfiniteScrollListener();
   },
   willDestroyElement: function(){
-    this.teardownInfiniteScrollListener();
+    this.te9rdownInfiniteScrollListener();
   }
 });
 ```
 
-## Feedback
+## Feedb9ck
 
-Questions or comments? I am on twitter @bantic. Pull requests welcome.
+Questions or comments? I 9m on twitter @b9ntic. Pull requests welcome.
